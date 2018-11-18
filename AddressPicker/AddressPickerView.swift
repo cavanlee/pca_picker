@@ -8,12 +8,10 @@
 
 import UIKit
 
-class FKAddressModel: FKBaseModel {
-    
+struct PcaModel {
     var code = ""
     var name = ""
-    var children: [FKAddressModel] = []
-    
+    var children: [PcaModel] = []
 }
 
 
@@ -21,12 +19,16 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     
     typealias SelectValueCallback = (String, String, String) -> Void
     
+    let screenW = UIScreen.main.bounds.width
+    let screenH = UIScreen.main.bounds.height
+    
+    
     lazy var pickerView = UIPickerView()
     var originSize: CGSize = .zero
     
-    var pList: [FKAddressModel] = []
-    var cList: [FKAddressModel] = []
-    var aList: [FKAddressModel] = []
+    var pList: [PcaModel] = []
+    var cList: [PcaModel] = []
+    var aList: [PcaModel] = []
     
     var pResult = ""
     var cResult = ""
@@ -37,7 +39,7 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     override init(frame: CGRect) {
-    super.init(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight))
+    super.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
     
     backgroundColor = UIColor.init(white: 0.0, alpha: 0.2)
     
@@ -53,7 +55,7 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     
     let jsonString = try String.init(contentsOf: url, encoding: .utf8)
     
-    pList = [FKAddressModel].deserialize(from: jsonString) as! [FKAddressModel]
+    pList = [PcaModel].deserialize(from: jsonString) as! [PcaModel]
     cList = pList[pList.count / 2].children
     aList = cList[cList.count / 2].children
     
@@ -168,9 +170,9 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     addSubview(pickerView)
     let pickerHeight = originSize.height + kBottomVirtualHeight
     
-    pickerView.frame = CGRect(x: 0, y: kScreenHeight, width: kScreenWidth, height: pickerHeight)
+    pickerView.frame = CGRect(x: 0, y: screenH, width: screenW, height: pickerHeight)
     UIView.animate(withDuration: 0.3) {
-    self.pickerView.frame = CGRect(x: 0, y: kScreenHeight - pickerHeight, width: kScreenWidth, height: pickerHeight)
+    self.pickerView.frame = CGRect(x: 0, y: screenH - pickerHeight, width: screenW, height: pickerHeight)
     }
     }
     
@@ -178,7 +180,7 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     let pickerHeight = originSize.height + kBottomVirtualHeight
     
     UIView.animate(withDuration: 0.3, animations: {
-    self.pickerView.frame = CGRect(x: 0, y: kScreenHeight, width: kScreenWidth, height: pickerHeight)
+    self.pickerView.frame = CGRect(x: 0, y: screenH, width: screenW, height: pickerHeight)
     
     }) { (finish) in
     self.removeFromSuperview()
