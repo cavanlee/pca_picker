@@ -172,7 +172,7 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         
         pickerView.frame = CGRect(x: 0, y: screenH, width: screenW, height: pickerHeight)
         UIView.animate(withDuration: 0.3) {
-            self.pickerView.frame = CGRect(x: 0, y: screenH - pickerHeight, width: screenW, height: pickerHeight)
+            self.pickerView.frame = CGRect(x: 0, y: self.screenH - pickerHeight, width: self.screenW, height: pickerHeight)
         }
     }
     
@@ -180,7 +180,7 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         let pickerHeight = originSize.height
         
         UIView.animate(withDuration: 0.3, animations: {
-            self.pickerView.frame = CGRect(x: 0, y: screenH, width: screenW, height: pickerHeight)
+            self.pickerView.frame = CGRect(x: 0, y: self.screenH, width: self.screenW, height: pickerHeight)
             
         }) { (finish) in
             self.removeFromSuperview()
