@@ -135,9 +135,9 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     guard let label = view as? UILabel else {
     let rect = CGRect(x: 0, y: 0, width: pickerView.rowSize(forComponent: component).width, height: pickerView.rowSize(forComponent: component).height)
     let initLabel = UILabel.init(frame: rect)
-    initLabel.font = kFont(size: 15)
+    initLabel.font = UIFont.systemFont(ofSize: 15)
     initLabel.textAlignment = .center
-    initLabel.textColor = kFontColor666
+    initLabel.textColor = UIColor.darkGray
     
     initLabel.text = setPickerData(with: component, row)
     
@@ -168,7 +168,7 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     UIApplication.shared.keyWindow?.addSubview(self)
     
     addSubview(pickerView)
-    let pickerHeight = originSize.height + kBottomVirtualHeight
+    let pickerHeight = originSize.height
     
     pickerView.frame = CGRect(x: 0, y: screenH, width: screenW, height: pickerHeight)
     UIView.animate(withDuration: 0.3) {
@@ -177,7 +177,7 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func hide() {
-    let pickerHeight = originSize.height + kBottomVirtualHeight
+    let pickerHeight = originSize.height
     
     UIView.animate(withDuration: 0.3, animations: {
     self.pickerView.frame = CGRect(x: 0, y: screenH, width: screenW, height: pickerHeight)
