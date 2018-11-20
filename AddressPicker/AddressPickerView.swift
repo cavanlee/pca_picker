@@ -54,8 +54,17 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         do {
             
             let jsonString = try String.init(contentsOf: url, encoding: .utf8)
+        
+            if let jsonData = jsonString.data(using: .utf8) {
+                let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments)
+                guard let pcaDic = jsonObject as? Dictionary<String, Any> else { return }
+                
+                print(pcaDic)
+            }
             
-            pList = [PcaModel].deserialize(from: jsonString) as! [PcaModel]
+            
+            
+//            pList = [PcaModel].deserialize(from: jsonString) as! [PcaModel]
             cList = pList[pList.count / 2].children
             aList = cList[cList.count / 2].children
             

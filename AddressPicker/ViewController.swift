@@ -10,10 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let picker = AddressPickerView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        picker.show()
+        view.addSubview(picker)
     }
     
 
