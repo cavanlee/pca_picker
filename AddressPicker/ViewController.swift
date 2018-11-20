@@ -11,15 +11,27 @@ import UIKit
 class ViewController: UIViewController {
 
     let picker = AddressPickerView()
+    let showBtn = UIButton.init(frame: CGRect(x: 100, y: 150, width: 100, height: 40))
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.addSubview(showBtn)
+        showBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        showBtn.setTitle("点击选择地址", for: .normal)
+        showBtn.setTitleColor(UIColor.darkGray, for: .normal)
+        showBtn.layer.cornerRadius = 5
+        showBtn.layer.masksToBounds = true
+        showBtn.layer.borderColor = UIColor.darkGray.cgColor
+        showBtn.layer.borderWidth = 1
+        showBtn.addTarget(self, action: #selector(showPickerAction), for: .touchUpInside)
+        
+    }
+    
+    @objc func showPickerAction() {
         picker.show()
         view.addSubview(picker)
     }
-    
-
     /*
     // MARK: - Navigation
 
