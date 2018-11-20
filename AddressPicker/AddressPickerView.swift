@@ -57,9 +57,19 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         
             if let jsonData = jsonString.data(using: .utf8) {
                 let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments)
-                guard let pcaDic = jsonObject as? Dictionary<String, Any> else { return }
+                let pcaArray = jsonObject as! Array<Any>
                 
-                print(pcaDic)
+                var pcas: [PcaModel] = []
+                
+                for element in pcaArray {
+                    let pdic = element as! NSDictionary
+                    var p = PcaModel()
+                    p.name = pdic["name"] as! String
+                    p.code = pdic["code"] as! String
+                    pcas.append(p)
+                }
+                
+                print(pcas)
             }
             
             
