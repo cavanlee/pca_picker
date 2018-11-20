@@ -57,30 +57,20 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         
             if let jsonData = jsonString.data(using: .utf8) {
                 let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments)
-                let pcaArray = jsonObject as! Array<Any>
+                let pcaArray = jsonObject as! NSArray
                 
-                var pcas: [PcaModel] = []
+                let pcas = deserialization(with: pcaArray)
                 
-                for element in pcaArray {
-                    let pdic = element as! NSDictionary
-                    var p = PcaModel()
-                    p.name = pdic["name"] as! String
-                    p.code = pdic["code"] as! String
-                    pcas.append(p)
-                }
+                pList = pcas
+                cList = pList[pList.count / 2].children
+                aList = cList[cList.count / 2].children
                 
-                print(pcas)
+                pickerView.selectRow(pList.count / 2, inComponent: 0, animated: true)
+                pickerView.selectRow(cList.count / 2, inComponent: 1, animated: true)
+                pickerView.selectRow(aList.count / 2, inComponent: 2, animated: true)
+                
             }
-            
-            
-            
-//            pList = [PcaModel].deserialize(from: jsonString) as! [PcaModel]
-            cList = pList[pList.count / 2].children
-            aList = cList[cList.count / 2].children
-            
-            pickerView.selectRow(pList.count / 2, inComponent: 0, animated: true)
-            pickerView.selectRow(cList.count / 2, inComponent: 1, animated: true)
-            pickerView.selectRow(aList.count / 2, inComponent: 2, animated: true)
+
             
         } catch let error as NSError {
             print("城市列表读取失败: \(error.description)")
@@ -214,4 +204,21 @@ class AddressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         super.init(coder: aDecoder)
     }
     
+    private func deserialization(with pcaArray: NSArray) -> [PcaModel] {
+        
+        var pcas: [PcaModel] = []
+        
+        for element in pcaArray {
+            let pdic = element as! NSDictionary
+            var p = PcaModel()
+            p.name = pdic["name"] as! String
+            p.code = pdic["code"] as! String
+            if let childrens = pdic["children"] as? NSArray {
+                p.children = deserialization(with: childrens)
+            }
+            pcas.append(p)
+        }
+        
+        return pcas
+    }
 }
