@@ -3,9 +3,9 @@ A picker view of province-city-area three-level linkage.
 
 #### How to use it?
 
-* Init the picker view.
+* Init the picker view. eg. `let picker = AddressPickerView()`.
 
-* Call the method `show()`.eg.`picker.show()`.
+* Call the method `show()`. eg. `picker.show()`.
 
 * The picker result is a Tuple will callback from the `SelectValueCallback` of picker view instance.
 
@@ -16,5 +16,3 @@ A picker view of province-city-area three-level linkage.
               self.resultLabel.text = p + c + a
           }
   ```
-
-
